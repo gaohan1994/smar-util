@@ -6,8 +6,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
-    // request.interceptors.request.use(this.addLoginFix);
-    // request.interceptors.response.use(this.responseInterceptor);
+    request.interceptors.request.use(this.addLoginFix);
+    request.interceptors.response.use(this.responseInterceptor);
   }
   addLoginFix(url, options) {
     console.log('url:', url);
