@@ -42,7 +42,7 @@ class CoreMiddleware {
    * @param {*} [options={}]
    * @memberof CoreMiddleware
    */
-  use(newMiddleware, options = {}) {
+  use(newMiddleware) {
     if (typeof newMiddleware !== 'function') {
       throw new Error('middleware must be a function!');
     }

@@ -31,7 +31,7 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js'],
   },
 
-  devtool: 'inline-source-map',
+  // devtool: 'inline-source-map',
 
   /**
    * @param module

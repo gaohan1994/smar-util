@@ -1,4 +1,5 @@
 import { Context, ContextResponse } from "types";
+import { requestTimeout } from '../../util'
 
 /**
  * @todo fetch 中间件
@@ -20,7 +21,13 @@ function fetchMiddleware(ctx: Context, next: Function) {
     interceptors,
   } = ctx;
 
-  const { useCache = false, method = 'get', params } = options;
+  /**
+   * @param useCache 是否使用cahce 默认 不使用
+   * @param method 请求 method 默认 get
+   * @param params
+   * @param timeout 超时时间 默认 0
+   */
+  const { useCache = false, method = 'get', params, timeout = 0 } = options;
 
   if (!fetch) {
     throw new Error('fetch not exist!');
@@ -57,27 +64,31 @@ function fetchMiddleware(ctx: Context, next: Function) {
    */
   let response;
 
-  /**
-   * @todo 获得报文
-   */
-  response = fetch(url, options);
+  if (timeout > 0) {
+    response = Promise.race([requestTimeout(timeout, ctx.request), fetch(url, options)]);
+  } else {
+    /**
+     * @todo 获得报文
+     */
+    response = fetch(url, options);
+  }
+
 
   /**
    * @todo 执行拦截器操作
    * 
    * 遍历拦截器传入响应报文并执行拦截器
    */
-  console.log('interceptors:', interceptors)
   interceptors.forEach((interceptorHandler) => {
     response = response.then((res) => {
-
       /**
        * @param resClone 兼容老版本
        */
       const resClone = typeof res.clone === 'function' ? res.clone() : res;
-      return interceptorHandler(resClone, options);
-    })
+      return interceptorHandler(resClone, options) || res;
+    });
   });
+
 
   return response.then((res: Response) => {
     if (needCache) {

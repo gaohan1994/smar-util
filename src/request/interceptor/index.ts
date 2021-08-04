@@ -15,8 +15,6 @@ export function addRequestInterceptor(url, options): RequestInterceptorResult {
   if (suffix) {
     url = `${url}${suffix}`;
   }
-  console.log('url', url);
-  console.log('options', options);
 
   return {
     url: url,

@@ -1,7 +1,7 @@
 import Cache from '../../cache';
 import CoreMiddleware from '../middleware';
 import fetchMiddleware from '../middleware/fetch';
-import { Context, RequestInterceptor, ResponseInterceptor, RequestInterceptorResult } from '../../types';
+import { Context, RequestInterceptor, ResponseInterceptor } from '../../types';
 import { addRequestInterceptor } from '../interceptor'
 
 /**
@@ -77,12 +77,11 @@ class RequestCore {
     /**
      * @todo 遍历请求拦截器 并且获得每次执行之后的url 以及options 并赋值
      */
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       for (let i = 0; i < this.requestInterceptors.length; i++) {
+
         const currentInterceptor = this.requestInterceptors[i];
         const { url, options } = currentInterceptor(ctx.request.url, ctx.request.options);
-
-        console.log('currentInterceptor url', url);
 
         ctx.request.url = url || ctx.request.url;
         ctx.request.options = options || ctx.request.options;
@@ -91,59 +90,6 @@ class RequestCore {
           return resolve();
         }
       }
-    });
-  }
-
-  /**
-   * 请求函数 请求连接必须是 string 类型
-   *
-   * @param {string} url
-   * 
-   * @param {any} option
-   * 
-   * @memberof RequestCore
-   */
-  public request(url: string, options) {
-    if (typeof url !== 'string') {
-      throw new Error('url musb be a string!');
-    }
-
-    /**
-     * @param {CoreParam} ctx
-     *
-     * 核心请求参数
-     */
-    let ctx: Context = {
-      request: {
-        url: url,
-        options: options,
-      },
-      response: undefined,
-      cache: this.cache,
-      interceptors: this.responseInterceptors
-    };
-
-    /**
-     * @promise
-     *
-     * 返回一个 Promise
-     * 
-     * 执行所有中间件并返回请求结果 ctx.response
-     * 
-     * 最后进行错误处理
-     */
-    return new Promise((resolve, reject) => {
-      this.executeRequestInterceptors(ctx)
-        .then(() => {
-          console.log('ctx: ', ctx);
-          return this.coreMiddleware.execute(ctx)
-        })
-        .then(() => {
-          resolve(ctx.response);
-        })
-        .catch((error) => {
-          reject(error);
-        });
     });
   }
 
@@ -187,6 +133,66 @@ class RequestCore {
     }
 
     this.responseInterceptors.push(handler);
+  }
+
+  /**
+   * 请求函数 请求连接必须是 string 类型
+   *
+   * @param {string} url
+   * 
+   * @param {any} option
+   * 
+   * @memberof RequestCore
+   */
+  public request(url: string, options) {
+    if (typeof url !== 'string') {
+      throw new Error('url musb be a string!');
+    }
+
+    /**
+     * @param {CoreParam} ctx
+     *
+     * 核心请求参数
+     */
+    let ctx: Context = {
+      request: {
+        url: url,
+        options: options,
+      },
+      response: undefined,
+      cache: this.cache,
+      interceptors: this.responseInterceptors
+    };
+
+    /**
+     * @promise
+     *
+     * @todo 返回一个 Promise 执行所有中间件并返回请求结果 ctx.response 最后进行错误处理
+     */
+    return new Promise((resolve, reject) => {
+      this.executeRequestInterceptors(ctx)
+        .then(() => {
+          return this.coreMiddleware.execute(ctx)
+        })
+        .then(() => {
+          resolve(ctx.response);
+        })
+        .catch((error) => {
+          /**
+           * 如果外部传入 error 处理函数则调用
+           */
+          if (ctx.request.options.onError) {
+            try {
+              const errorData = ctx.request.options.onError(error);
+              resolve(errorData);
+            } catch (error) {
+              reject(error);
+            }
+          } else {
+            reject(error);
+          }
+        });
+    });
   }
 }
 

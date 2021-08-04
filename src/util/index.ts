@@ -140,3 +140,19 @@ export class ResponseError extends Error {
     this.type = type;
   }
 }
+
+/**
+ * 请求超时函数
+ *
+ * @export
+ * @param {*} time
+ * @param {*} request
+ * @return {*} 
+ */
+export function requestTimeout(time, request) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      reject(new RequestError(`Timeout Error ${time}ms !`, request, 'RequestTimeout'));
+    }, time);
+  })
+}

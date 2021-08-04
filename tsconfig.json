@@ -13,12 +13,15 @@
     "outDir": "lib",
     "noUnusedLocals": true,
     "noUnusedParameters": false,
-    "strictNullChecks": true,
-    "sourceMap": true,
+    "strictNullChecks": false,
+    "sourceMap": false,
+    // "inlineSourceMap": true,
+    // "inlineSources": true,
     "baseUrl": "src",
     "rootDir": ".",
     "resolveJsonModule": true,
-    "typeRoots": ["node_modules/@types", "global.d.ts"]
+    "typeRoots": ["node_modules/@types", "global.d.ts"],
+    "declaration": true
   },
   "exclude": ["node_modules", "dist"],
   "compileOnSave": true
