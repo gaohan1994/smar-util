@@ -5,7 +5,7 @@
  * @param {*} value
  * @return {boolean} value is Array
  */
-export function isArray(value) {
+export function isArray(value): value is Array<any> {
   return (
     typeof value === 'object' &&
     Object.prototype.toString.call(value) === '[object Array]'
@@ -19,7 +19,7 @@ export function isArray(value) {
  * @param {*} value
  * @return {boolean} value is object
  */
-export function isObject(value) {
+export function isObject(value): value is object {
   return value !== null && typeof value === 'object';
 }
 
@@ -36,7 +36,7 @@ export function formatSearchParams(value) {
    *
    * 浏览器参数
    */
-  const search = value || history.location.search;
+  const search = value || window.location.search;
 
   /**
    * @param result
@@ -67,6 +67,21 @@ export function formatSearchParams(value) {
  */
 export class RequestError extends Error {
   /**
+   *
+   * @param {string} request
+   *
+   * 请求地址
+   */
+  public request;
+
+  /**
+   * @param {string} type
+   *
+   * 错误类型默认 RequestError
+   */
+  public type;
+
+  /**
    * @param {string} text
    *
    * 报错信息
@@ -75,53 +90,53 @@ export class RequestError extends Error {
     super(text);
 
     this.name = 'RequestError';
-    /**
-     *
-     * @param {string} request
-     *
-     * 请求地址
-     */
+
     this.request = request;
-    /**
-     * @param {string} type
-     *
-     * 错误类型默认 RequestError
-     */
+
     this.type = type;
   }
 }
 
 export class ResponseError extends Error {
+
+  /**
+   * @param {any} data
+   *
+   * 响应报错数据
+   */
+  public data;
+
+  /**
+   * @param {Response} response
+   *
+   * 响应报文
+   */
+  public response;
+
+  /**
+   * @param {string} request
+   *
+   * 请求
+   */
+  public request;
+
+  /**
+   * @param {string} type
+   *
+   * 错误类型 默认 ResponseError
+   */
+  public type;
+
   constructor(response, text, data, request, type = 'ResponseError') {
     super(text);
     this.name = 'ResponseError';
 
-    /**
-     * @param {any} data
-     *
-     * 响应报错数据
-     */
     this.data = data;
 
-    /**
-     * @param {Response} response
-     *
-     * 响应报文
-     */
     this.response = response;
 
-    /**
-     * @param {string} request
-     *
-     * 请求
-     */
     this.request = request;
 
-    /**
-     * @param {string} type
-     *
-     * 错误类型 默认 ResponseError
-     */
     this.type = type;
   }
 }

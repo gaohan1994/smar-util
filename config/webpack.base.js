@@ -10,7 +10,7 @@ module.exports = {
    *
    * 入口文件 src/index.js
    */
-  entry: paths.src + '/index.js',
+  entry: paths.src + '/index.ts',
 
   /**
    * @param output
@@ -21,6 +21,17 @@ module.exports = {
     path: paths.dist,
     filename: '[name]-[contenthash].js',
   },
+
+  /**
+   * @param resolve
+   *
+   * 支持 ts 拓展
+   */
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
+  },
+
+  devtool: 'inline-source-map',
 
   /**
    * @param module
@@ -35,12 +46,17 @@ module.exports = {
     rules: [
       {
         test: /\.(js|mjs|jsx|ts|tsx)$/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env'],
+        use: [
+          // {
+          //   loader: 'babel-loader',
+          //   options: {
+          //     presets: ['@babel/preset-env'],
+          //   },
+          // },
+          {
+            loader: 'awesome-typescript-loader',
           },
-        },
+        ],
         exclude: /node_modules/,
       },
     ],

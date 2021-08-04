@@ -1,29 +1,38 @@
+import { ContextResponse } from "types";
+
 /**
  * 请求缓存类
  *
- * @class RequestCache
+ * @class Cache
  */
-class RequestCache {
+class Cache {
+
+  /**
+   * @member {Map} cache
+   *
+   * 主缓存对象
+   */
+  private cache: Map<String, ContextResponse>;
+
+  /**
+   * @member {number} expirationTime
+   *
+   * 过期时间
+   */
+  expirationTime: number;
+
+  /**
+   * @member {object} options
+   *
+   * 参数
+   */
+  options;
+
   constructor(options) {
-    /**
-     * @member {Map} cache
-     *
-     * 主缓存对象
-     */
     this.cache = new Map();
 
-    /**
-     * @member {object} options
-     *
-     * 参数
-     */
-    this.option = options;
+    this.options = options;
 
-    /**
-     * @member {number} expirationTime
-     *
-     * 过期时间
-     */
     this.expirationTime =
       options.expirationTime !== undefined
         ? options.expirationTime
@@ -102,7 +111,9 @@ class RequestCache {
   /**
    * 拆包缓存的数据
    */
-  unpack() {}
+  unpack(value) {
+    return value.data;
+  }
 }
 
-export default RequestCache;
+export default Cache;

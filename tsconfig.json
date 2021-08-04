@@ -1,0 +1,25 @@
+{
+  "files": ["src/index.ts"],
+  "compilerOptions": {
+    "lib": ["es6", "DOM"],
+    "target": "es5",
+    "allowJs": false,
+    "module": "commonjs",
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "allowSyntheticDefaultImports": true,
+    "outDir": "lib",
+    "noUnusedLocals": true,
+    "noUnusedParameters": false,
+    "strictNullChecks": true,
+    "sourceMap": true,
+    "baseUrl": "src",
+    "rootDir": ".",
+    "resolveJsonModule": true,
+    "typeRoots": ["node_modules/@types", "global.d.ts"]
+  },
+  "exclude": ["node_modules", "dist"],
+  "compileOnSave": true
+}

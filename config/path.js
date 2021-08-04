@@ -21,4 +21,18 @@ module.exports = {
    * 生成代码目录
    */
   dist: path.resolve(__dirname, '../dist'),
+
+  /**
+   * @param demoEntry
+   *
+   * 测试入口文件
+   */
+  demoEntry: path.resolve(__dirname, '../demo/index.js'),
+
+  /**
+   * @param demoDist
+   *
+   * 测试生成文件
+   */
+  demoDist: path.resolve(__dirname, '../demo/public'),
 };

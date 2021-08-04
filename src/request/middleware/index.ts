@@ -7,6 +7,10 @@ import compose from './compose';
  * @class CoreMiddleware
  */
 class CoreMiddleware {
+  public defaultMiddlewares;
+
+  public middlewares;
+
   /**
    * @method constructor
    * 构造函数

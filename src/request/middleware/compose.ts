@@ -37,7 +37,7 @@ function compose(middlewares) {
    * @param {function} next
    * 下一个中间件
    */
-  return function wrapMiddleware(params, next) {
+  return function wrapMiddleware(params: any, next?: Function) {
     let index = -1;
 
     function dispatch(i) {
