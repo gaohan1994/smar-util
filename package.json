@@ -30,5 +30,22 @@
     "ts-loader": "^9.2.4",
     "typescript": "^4.3.5",
     "webpack-dev-server": "^3.11.2"
-  }
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gaohan1994/smar-util.git"
+  },
+  "keywords": [
+    "request",
+    "fetch",
+    "javascript",
+    "util"
+  ],
+  "bugs": {
+    "url": "https://github.com/gaohan1994/smar-util/issues"
+  },
+  "homepage": "https://github.com/gaohan1994/smar-util#readme"
 }
