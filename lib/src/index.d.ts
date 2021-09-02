@@ -2,17 +2,15 @@
  * @Author: centerm.gaohan
  * @Date: 2021-07-30 11:08:34
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-09-02 17:01:24
+ * @Last Modified time: 2021-09-02 16:56:59
  *
  */
-
 import request from './request/request';
 import { isArray, isObject, formatSearchParams, deepClone } from './util/index';
-
 /**
  * @function request
  *
  * 封装 fetch 请求工具
  */
-
-export { request, isArray, isObject, formatSearchParams, deepClone };
+export default request;
+export { isArray, isObject, formatSearchParams, deepClone };

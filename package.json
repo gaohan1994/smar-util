@@ -16,11 +16,17 @@
     "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^5.0.0-rc.6",
     "webpack-cli": "^4.0.0-rc.1",
-    "yarn": "^1.22.11"
+    "yarn": "^1.22.11",
+    "rollup": "^2.56.2",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-typescript2": "^0.30.0"
   },
   "scripts": {
     "tsc": "tsc -w",
-    "build": "webpack --config config/webpack.base.js --mode development",
+    "build": "rollup -c config/rollup.config.js",
     "demo": "node scripts/demo.js",
     "pub": "npm publish --registry http://registry.npmjs.org"
   },
