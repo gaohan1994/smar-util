@@ -1,5 +1,5 @@
 {
-  "files": ["src/index.ts"],
+  // "files": ["src/index.ts"],
   "compilerOptions": {
     "lib": ["es6", "DOM"],
     "target": "ES5",
@@ -7,22 +7,19 @@
     "module": "ES2015",
     "removeComments": false,
     "preserveConstEnums": true,
-    "moduleResolution": "node",
+    "moduleResolution": "Node",
     "noImplicitAny": false,
     "allowSyntheticDefaultImports": true,
-    "outDir": "lib",
-    "noUnusedLocals": true,
-    "noUnusedParameters": false,
-    "strictNullChecks": false,
+    "outDir": "dist",
     "sourceMap": false,
     // "inlineSourceMap": true,
     // "inlineSources": true,
     "baseUrl": "src",
-    "rootDir": ".",
+    // "rootDir": ".",
     "resolveJsonModule": true,
-    "typeRoots": ["node_modules/@types", "global.d.ts"],
+    // "typeRoots": ["node_modules/@types", "global.d.ts"],
     "declaration": true
   },
-  "exclude": ["node_modules", "dist"],
-  "compileOnSave": true
+  "compileOnSave": true,
+  "include": ["src/**/*"]
 }

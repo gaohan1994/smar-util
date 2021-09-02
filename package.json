@@ -2,8 +2,8 @@
   "name": "smar-util",
   "version": "1.0.4",
   "description": "gaohan javascript util",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "author": "Ghan",
   "license": "MIT",
   "dependencies": {
@@ -39,7 +39,7 @@
     "webpack-dev-server": "^3.11.2"
   },
   "directories": {
-    "lib": "lib"
+    "dist": "dist"
   },
   "repository": {
     "type": "git",

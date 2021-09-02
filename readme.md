@@ -1,9 +1,19 @@
 ## Smar Util
 
+### Why
+
+这是 Ghan 封装的常用 javascript 库内含有
+
+- request 封装 fetch 请求
+- isArray 判断 Array
+- isObject 判断 Object
+- formatSearchParams 初始化 query 参数
+- deepClone 深拷贝
+
 ### 使用
 
 ```js
-import request from 'smar-util';
+import { request } from 'smar-util';
 
 function requestInterceptor(url, options) {
   return {
