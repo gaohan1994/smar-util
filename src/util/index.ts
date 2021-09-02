@@ -156,3 +156,27 @@ export function requestTimeout(time, request) {
     }, time);
   })
 }
+
+/**
+ * 深拷贝
+ *
+ * @export
+ * @param {*} target
+ * @return {*} 
+ */
+export function deepClone(target) {
+  // 如果不是对象类型则返回
+  if (typeof target !== 'object') {
+    return;
+  }
+
+  let newObj = target instanceof Array ? [] : {};
+
+  for (let key in target) {
+    if (target.hasOwnProperty(key)) {
+      newObj[key] = typeof target[key] === 'object' ? deepClone(target[key]) : target[key];
+    }
+  }
+
+  return newObj;
+}
