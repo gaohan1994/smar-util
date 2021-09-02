@@ -7,7 +7,7 @@
  */
 
 import request from './request/request';
-import { isArray, isObject, formatSearchParams } from './util/index';
+import { isArray, isObject, formatSearchParams, deepClone } from './util/index';
 
 /**
  * @function request
@@ -16,4 +16,4 @@ import { isArray, isObject, formatSearchParams } from './util/index';
  */
 export default request;
 
-export { isArray, isObject, formatSearchParams };
+export { isArray, isObject, formatSearchParams, deepClone };

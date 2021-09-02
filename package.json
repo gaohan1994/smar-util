@@ -21,7 +21,8 @@
   "scripts": {
     "tsc": "tsc -w",
     "build": "webpack --config config/webpack.base.js --mode development",
-    "demo": "node scripts/demo.js"
+    "demo": "node scripts/demo.js",
+    "pub": "npm publish --registry http://registry.npmjs.org"
   },
   "devDependencies": {
     "awesome-typescript-loader": "^5.2.1",
