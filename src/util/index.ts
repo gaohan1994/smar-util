@@ -157,6 +157,7 @@ export function requestTimeout(time, request) {
   })
 }
 
+
 /**
  * 深拷贝
  *
@@ -164,13 +165,13 @@ export function requestTimeout(time, request) {
  * @param {*} target
  * @return {*} 
  */
-export function deepClone(target) {
+export function deepClone<T>(target: T): T {
   // 如果不是对象类型则返回
   if (typeof target !== 'object') {
     return;
   }
 
-  let newObj = target instanceof Array ? [] : {};
+  let newObj: any = target instanceof Array ? [] : {};
 
   for (let key in target) {
     if (target.hasOwnProperty(key)) {
