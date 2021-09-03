@@ -10,19 +10,8 @@
     "@babel/core": "^7.14.8",
     "@babel/preset-env": "^7.14.8",
     "@babel/preset-react": "^7.14.5",
-    "add": "^2.0.6",
     "babel-loader": "^8.0.0-beta.6",
-    "core-js": "3.9.0",
-    "uglifyjs-webpack-plugin": "^2.2.0",
-    "webpack": "^5.0.0-rc.6",
-    "webpack-cli": "^4.0.0-rc.1",
-    "yarn": "^1.22.11",
-    "rollup": "^2.56.2",
-    "rollup-plugin-babel": "^4.4.0",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-node-builtins": "^2.1.2",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-typescript2": "^0.30.0"
+    "core-js": "3.9.0"
   },
   "scripts": {
     "tsc": "tsc -w",
@@ -36,7 +25,13 @@
     "react-dom": "^17.0.2",
     "ts-loader": "^9.2.4",
     "typescript": "^4.3.5",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-dev-server": "^3.11.2",
+    "rollup": "^2.56.2",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-typescript2": "^0.30.0"
   },
   "directories": {
     "dist": "dist"
