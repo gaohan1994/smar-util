@@ -1,7 +1,7 @@
 const path = require('path');
 const rollupResolvePlugin = require('rollup-plugin-node-resolve');
 const rollupBuiltinsPlugin = require('rollup-plugin-node-builtins');
-const rollupBabel = require('rollup-plugin-babel');
+// const rollupBabel = require('rollup-plugin-babel');
 const rollupCommonJsPlugin = require('rollup-plugin-commonjs');
 const rollupTypescriptPlugin = require('rollup-plugin-typescript2');
 const packageJson = require('../package.json');
@@ -69,8 +69,8 @@ module.exports = {
       extensions: ['.js', '.ts'],
     }),
 
-    rollupBabel({
-      exclude: 'node_modules/**',
-    }),
+    // rollupBabel({
+    //   exclude: 'node_modules/**',
+    // }),
   ],
 };
