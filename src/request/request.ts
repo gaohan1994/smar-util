@@ -1,14 +1,39 @@
-import RequestCore from './core';
 
 /**
  * @Author: centerm.gaohan
  * @Date: 2021-07-30 11:16:52
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-08-04 14:10:00
+ * @Last Modified time: 2021-09-06 17:56:33
  *
  */
 
-const request = (options = {}) => {
+import RequestCore from './core';
+import { RequestInterceptor } from 'types';
+
+/**
+ * 定义 request 文件
+ */
+interface RequestInterface {
+  // 使用中间件
+  use: (middleware: any, options?: any) => RequestCore;
+
+  interceptors: {
+    request: {
+      use: (handler: RequestInterceptor) => void;
+    },
+    response: {
+      use: (handler: RequestInterceptor) => void;
+    }
+  },
+
+  // 语法糖
+  get: (url: any, options?: any) => any;
+  post: (url: any, options?: any) => any;
+  put: (url: any, options?: any) => any;
+  delete: (url: any, options?: any) => any;
+}
+
+const request = (options = {}): RequestInterface => {
   const requestCore = new RequestCore(options);
 
   /**
@@ -67,7 +92,7 @@ const request = (options = {}) => {
     }
   })
 
-  return requestInstance;
+  return requestInstance as any;
 };
 
 export default request({});

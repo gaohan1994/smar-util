@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import request from '../lib/src/index';
+import { request, quickSort } from '../dist/index';
 
 class App extends React.Component {
   constructor(props) {
@@ -10,7 +10,7 @@ class App extends React.Component {
     request.interceptors.response.use(this.responseInterceptor);
   }
   addLoginFix(url, options) {
-    console.log('url:', url);
+    // console.log('url:', url);
     return {
       url: '',
       options: options,
@@ -18,8 +18,8 @@ class App extends React.Component {
   }
 
   responseInterceptor(res, options) {
-    console.log('res', res);
-    console.log('options:', options);
+    // console.log('res', res);
+    // console.log('options:', options);
 
     return res;
   }
@@ -29,19 +29,14 @@ class App extends React.Component {
   }
 
   componentDidMount = () => {
-    request
-      .get('https://huibaifen.rup-china.com/index/meetingany/getButtonImg', {
-        data: {},
-        headers: {
-          unionid: 'oZL5w1qyW4cN2i8h0ElLClyPBkrg',
-          withCredentials: true,
-        },
-        timeout: 1,
-        onError: this.requestOnError,
-      })
-      .then((res) => {
-        console.log('res', res);
-      });
+    // request
+    //   .get('http://101.132.24.127:9090/api/getimmortal', {
+    //     onError: this.requestOnError,
+    //   })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log('data', data);
+    //   });
   };
 
   render() {
