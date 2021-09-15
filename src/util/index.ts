@@ -352,3 +352,52 @@ export function quickSortStack(array: number[]): number[] {
 
   return array;
 }
+
+/**
+ * 数组去重
+ *
+ * @export
+ * @param {number[]} array
+ * @return {number[]} 
+ */
+export function unique(array: number[]): number[] {
+  const data = array.filter((item, index, prevArray) => {
+
+    // 判断数组中第一次出现当前数字的坐标是否等于当前坐标
+    // 如果不是说明已经有了
+    return prevArray.indexOf(item) === index;
+  });
+  return data;
+}
+
+/**
+ * 数组扁平化
+ *
+ * @export
+ */
+export function flatten<T>(array: Array<T>): Array<T> {
+
+  // 建立栈辅助
+  // 初始化时把array传入
+  let stack = [...array];
+
+  // 最终扁平化的数据
+  let data: Array<T> = [];
+
+  // 遍历
+  while (stack.length > 0) {
+
+    // 从栈顶(队尾)弹出元素
+    const current = stack.pop();
+
+    if (isArray(current)) {
+      // 如果是数组类型则推入栈
+      stack.push(...current);
+    } else {
+      data.push(current);
+    }
+  }
+
+  // 注意因为是从后往前遍历，所以返回的时候要翻转一下
+  return data.reverse();
+}
