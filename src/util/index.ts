@@ -401,3 +401,196 @@ export function flatten<T>(array: Array<T>): Array<T> {
   // 注意因为是从后往前遍历，所以返回的时候要翻转一下
   return data.reverse();
 }
+
+/**
+ * 函数防抖
+ *
+ * @export
+ * @param {*} callback
+ * @param {*} delay
+ * @param {boolean} immediate 是否是立即执行的版本
+ */
+export function debounce(callback, delay, immediate: boolean) {
+  let timer;
+
+  return function () {
+    const context = this;
+    const args = arguments;
+
+    // 注意 clearTimeout 并不会把timer置null
+    if (timer) {
+      clearTimeout(timer);
+    }
+
+    if (immediate === true) {
+      const callNow = !timer;
+      timer = setTimeout(() => {
+        timer = null;
+      }, delay);
+      if (callNow) {
+        callback.apply(context, args);
+      }
+    } else {
+      timer = setTimeout(() => {
+        callback.apply(context, args);
+      }, delay);
+    }
+  }
+}
+
+interface ThrottleOptions {
+  /**
+   * 是否禁用第一次执行
+   * @param leading
+   */
+  leading: boolean;
+  /**
+   * 是否禁用最后一次执行
+   * @param trailling
+   */
+  trailling: boolean;
+}
+interface Throttle {
+  (callback: Function, delay: number, options?: ThrottleOptions): any
+}
+
+/**
+ * 节流函数 每n秒内 只执行一次函数
+ *
+ * @export
+ * @param {*} callback
+ * @param {*} delay
+ */
+export function throttle(callback, delay, options = { leading: true, trailling: true }): Throttle {
+  // 时间戳判断
+  // 设定一个时间戳，如果当前时间戳 - 之前时间戳，如果 > 传入的周期则 执行函数，否则不执行
+  // let prevTimer = 0;
+
+  // return function () {
+  //   const context = this;
+  //   const args = arguments;
+  //   let now = +new Date();
+
+  //   if (now - prevTimer > delay) {
+  //     callback.apply(context, args);
+  //     prevTimer = now;
+  //   }
+  // }
+
+  // 定时器版本
+  // 设定一个定时器，如果存在定时器，执行完定时器的操作之后清空定时器
+  // let prevTimer;
+  // return function () {
+  //   const context = this;
+  //   const args = arguments;
+
+  //   if (!prevTimer) {
+  //     prevTimer = setTimeout(() => {
+  //       prevTimer = null;
+  //       callback.apply(context, args);
+  //     }, delay);
+  //   }
+  // }
+
+  // 两个都有缺陷 时间戳会立即执行 但是最后不会执行
+  // 定时器不会立即执行 但是在结束之后还会再执行一次
+
+  let prevTime = 0;
+  let timer;
+
+  let context;
+  let args;
+
+  const { leading, trailling } = options;
+
+  const later = function () {
+    prevTime = +new Date();
+    timer = null;
+    callback.apply(context, args)
+  }
+
+  const throettled = function () {
+    context = this;
+    args = arguments;
+
+    let now = +new Date();
+
+    if (!prevTime && leading === false) {
+      // 如果 prevTime 是空，则是第一次，且 leading = false 禁用第一次触发
+      // prevTime = now 
+      prevTime = now;
+    }
+
+    /**
+     * 触发下次函数剩余时间
+     * @param remaining
+     */
+    let remaining = delay - (now - prevTime);
+    if (remaining <= 0) {
+      if (timer) {
+        clearTimeout(timer);
+        timer = null;
+      }
+      prevTime = now;
+      callback.apply(context, args);
+    } else if (!timer && trailling !== false) {
+      timer = setTimeout(later, delay);
+    }
+  }
+
+  return throettled;
+}
+
+/**
+ * 图片懒加载函数
+ *
+ * @export
+ */
+export function initImgLazyLoad() {
+  /**
+   * 如果非浏览器环境则返回
+   */
+  if (!document || !window) return;
+
+  /**
+   * 拿到全部图片
+   */
+  let imageList: Array<HTMLImageElement> = [];
+  document.querySelectorAll('img').forEach(img => {
+    imageList.push(img);
+  });;
+
+  const length = imageList.length;
+
+  const imgLazyLoad = (() => {
+    let count = 0;
+
+    return function () {
+      let alreadyLoadList = [];
+      /**
+       * 遍历图片
+       */
+      imageList.forEach((img, i) => {
+        let rect = img.getBoundingClientRect();
+
+        if (rect.top < window.innerHeight) {
+
+          img.src = img.dataset.src;
+          alreadyLoadList.push(i);
+          count++;
+
+          // 如果全部图片加载完毕 移除监听事件
+          if (count === length) {
+            document.removeEventListener('scroll', imgLazyLoad);
+          }
+        }
+      })
+
+      // 剔除掉已经加载的图片
+      imageList = imageList.filter((img, index) => !alreadyLoadList.includes(index));
+    }
+  })();
+
+  // 这里最好加上防抖
+  document.addEventListener('scroll', imgLazyLoad);
+}

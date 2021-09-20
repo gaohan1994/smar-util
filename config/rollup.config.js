@@ -27,10 +27,6 @@ module.exports = {
       format: 'umd',
       name: 'smar-util',
     },
-    // {
-    //   file: 'build/bundle.cjs.js',
-    //   format: 'cjs',
-    // },
   ],
 
   /**
