@@ -2,7 +2,8 @@
 
 ### Why
 
-这是 Ghan 封装的常用 javascript 库内含有
+这是我经常用到的一些函数或者工具封装的库！
+封装的常用 javascript 库内含有
 
 - request 封装 fetch 请求
 - isArray 判断 Array

@@ -4,7 +4,7 @@ const rollupBuiltinsPlugin = require('rollup-plugin-node-builtins');
 // const rollupBabel = require('rollup-plugin-babel');
 const rollupCommonJsPlugin = require('rollup-plugin-commonjs');
 const rollupTypescriptPlugin = require('rollup-plugin-typescript2');
-const packageJson = require('../package.json');
+const { terser } = require('rollup-plugin-terser');
 
 function getPath(pathName) {
   return path.resolve(__dirname, pathName);
@@ -26,6 +26,23 @@ module.exports = {
       file: 'dist/index.js',
       format: 'umd',
       name: 'smar-util',
+    },
+    {
+      file: 'dist/index.min.js',
+      format: 'umd',
+      name: 'smar-util',
+      plugins: [terser()],
+    },
+    {
+      file: 'dist/index.cjs.js',
+      format: 'commonjs',
+      name: 'smar-util',
+    },
+    {
+      file: 'dist/index.min.cjs.js',
+      format: 'commonjs',
+      name: 'smar-util',
+      plugins: [terser()],
     },
   ],
 

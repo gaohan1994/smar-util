@@ -594,3 +594,75 @@ export function initImgLazyLoad() {
   // 这里最好加上防抖
   document.addEventListener('scroll', imgLazyLoad);
 }
+
+/**
+ * JsonP跨域解决方案
+ *
+ * @export
+ * @param {*} url 请求地址
+ * @param {*} [params={}] 请求参数
+ * @param {*} callbackName 回调名字
+ */
+export function jsonP(url, params = {}, callbackName) {
+  // 非浏览器环境直接返回
+  if (!document || !window) {
+    return null;
+  }
+
+  function generateUrl() {
+    let dataStr = '';
+
+    // 拼接请求参数
+    for (let key in params) {
+      if (params.hasOwnProperty(key)) {
+        dataStr += `${key}=${params[key]}&`;
+      }
+    }
+
+    dataStr += `callback=${callbackName}`;
+
+    return `${url}?${dataStr}`;
+  }
+
+  return new Promise((resolve) => {
+    const scriptElement = document.createElement('script');
+    scriptElement.src = generateUrl();
+    document.body.appendChild(scriptElement);
+
+    (window as any)[callbackName] = data => {
+      resolve(data);
+      document.removeChild(scriptElement);
+    }
+  });
+}
+
+/**
+ * 安全计算数字
+ * 防止精度丢失
+ * @param add
+ */
+export const add = function safeNumberAdd(number1: number, number2: number) {
+
+  /**
+   * 数字的精度 如传入 0.1 0.01
+   * 则 number1Digits = 1;
+   * number2Digits = 2;
+   * @param number1Digits
+   * @param number2Digits
+   */
+  const number1Digits = (number1.toString().split('.')[1] || '').length;
+  const number2Digits = (number2.toString().split('.')[1] || '').length;
+
+  /**
+   * 根据较大的精度生成基础数
+   * number1Digits = 1;
+   * number2Digits = 2;
+   * baseNumber = Math.pow(10, 2) = 100;
+   * 
+   * return (number1 * 100 + number2 * 100) / 100;
+   * @param baseNumber
+   */
+  const baseNumber = Math.pow(10, Math.max(number1Digits, number2Digits));
+
+  return (number1 * baseNumber + number2 * baseNumber) / baseNumber;
+}
