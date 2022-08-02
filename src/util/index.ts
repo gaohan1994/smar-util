@@ -7,8 +7,8 @@
  */
 export function isArray(value): value is Array<any> {
   return (
-    typeof value === 'object' &&
-    Object.prototype.toString.call(value) === '[object Array]'
+    typeof value === "object" &&
+    Object.prototype.toString.call(value) === "[object Array]"
   );
 }
 
@@ -20,7 +20,7 @@ export function isArray(value): value is Array<any> {
  * @return {boolean} value is object
  */
 export function isObject(value): value is object {
-  return value !== null && typeof value === 'object';
+  return value !== null && typeof value === "object";
 }
 
 /**
@@ -44,15 +44,15 @@ export function formatSearchParams(value) {
    * 格式化之后的浏览器参数
    */
   let result = {};
-  if (search === '') {
+  if (search === "") {
     return result;
   }
 
   search
-    .replace('?', '')
-    .split('&')
+    .replace("?", "")
+    .split("&")
     .forEach((item) => {
-      result[item.split('=')[0]] = item.split('=')[1];
+      result[item.split("=")[0]] = item.split("=")[1];
     });
   return result;
 }
@@ -66,77 +66,12 @@ export function formatSearchParams(value) {
  * @extends {Error}
  */
 export class RequestError extends Error {
-  /**
-   *
-   * @param {string} request
-   *
-   * 请求地址
-   */
   public request;
-
-  /**
-   * @param {string} type
-   *
-   * 错误类型默认 RequestError
-   */
   public type;
-
-  /**
-   * @param {string} text
-   *
-   * 报错信息
-   */
-  constructor(text, request, type = 'RequestError') {
+  constructor(text, request, type = "RequestError") {
     super(text);
-
-    this.name = 'RequestError';
-
+    this.name = "RequestError";
     this.request = request;
-
-    this.type = type;
-  }
-}
-
-export class ResponseError extends Error {
-
-  /**
-   * @param {any} data
-   *
-   * 响应报错数据
-   */
-  public data;
-
-  /**
-   * @param {Response} response
-   *
-   * 响应报文
-   */
-  public response;
-
-  /**
-   * @param {string} request
-   *
-   * 请求
-   */
-  public request;
-
-  /**
-   * @param {string} type
-   *
-   * 错误类型 默认 ResponseError
-   */
-  public type;
-
-  constructor(response, text, data, request, type = 'ResponseError') {
-    super(text);
-    this.name = 'ResponseError';
-
-    this.data = data;
-
-    this.response = response;
-
-    this.request = request;
-
     this.type = type;
   }
 }
@@ -147,27 +82,28 @@ export class ResponseError extends Error {
  * @export
  * @param {*} time
  * @param {*} request
- * @return {*} 
+ * @return {*}
  */
 export function requestTimeout(time, request) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      reject(new RequestError(`Timeout Error ${time}ms !`, request, 'RequestTimeout'));
+      reject(
+        new RequestError(`Timeout Error ${time}ms !`, request, "RequestTimeout")
+      );
     }, time);
-  })
+  });
 }
-
 
 /**
  * 深拷贝
  *
  * @export
  * @param {*} target
- * @return {*} 
+ * @return {*}
  */
 export function deepClone<T>(target: T): T {
   // 如果不是对象类型则返回
-  if (typeof target !== 'object') {
+  if (typeof target !== "object") {
     return;
   }
 
@@ -175,7 +111,8 @@ export function deepClone<T>(target: T): T {
 
   for (let key in target) {
     if (target.hasOwnProperty(key)) {
-      newObj[key] = typeof target[key] === 'object' ? deepClone(target[key]) : target[key];
+      newObj[key] =
+        typeof target[key] === "object" ? deepClone(target[key]) : target[key];
     }
   }
 
@@ -191,12 +128,11 @@ export function deepClone<T>(target: T): T {
  * @return {*}  {number[]}
  */
 export function quickSort(array: number[]): number[] {
-
   /**
    * 递归函数
    *
    * @param {*} data 数组
-   * @param {*} start 
+   * @param {*} start
    * @param {*} end
    */
   function position(data, start, end) {
@@ -214,7 +150,6 @@ export function quickSort(array: number[]): number[] {
     // 把比基准值小的放左边
     // 建立循环当 left > right 时停止
     while (left < right) {
-
       // 寻找右边比基准值小的数
       while (left < right && key <= data[right]) {
         right--;
@@ -260,11 +195,11 @@ export function quickSort(array: number[]): number[] {
 type QuitSortStackItem = {
   start: number;
   end: number;
-}
+};
 
 /**
  * 快速排序非递归方法
- * 
+ *
  * 相比递归版本 防止爆栈
  *
  * @export
@@ -272,7 +207,6 @@ type QuitSortStackItem = {
  * @return {*}  {number[]}
  */
 export function quickSortStack(array: number[]): number[] {
-
   /**
    * 排序主函数
    *
@@ -291,7 +225,6 @@ export function quickSortStack(array: number[]): number[] {
 
     // 循环遍历
     while (left < right) {
-
       // 找到右边比基准值小的值
       while (left < right && key <= data[right]) {
         right--;
@@ -325,7 +258,6 @@ export function quickSortStack(array: number[]): number[] {
   let end = array.length - 1;
 
   do {
-
     if (stack.length != 0) {
       const current = stack.pop();
       start = current.start;
@@ -337,7 +269,6 @@ export function quickSortStack(array: number[]): number[] {
 
     // 如果没结束
     if (currentIndex !== -1) {
-
       // 左边还有数没有排序
       if (currentIndex - 1 > start) {
         stack.push({ start, end: currentIndex - 1 });
@@ -348,7 +279,7 @@ export function quickSortStack(array: number[]): number[] {
         stack.push({ start: currentIndex + 1, end });
       }
     }
-  } while (stack.length > 0)
+  } while (stack.length > 0);
 
   return array;
 }
@@ -358,11 +289,10 @@ export function quickSortStack(array: number[]): number[] {
  *
  * @export
  * @param {number[]} array
- * @return {number[]} 
+ * @return {number[]}
  */
 export function unique(array: number[]): number[] {
   const data = array.filter((item, index, prevArray) => {
-
     // 判断数组中第一次出现当前数字的坐标是否等于当前坐标
     // 如果不是说明已经有了
     return prevArray.indexOf(item) === index;
@@ -376,7 +306,6 @@ export function unique(array: number[]): number[] {
  * @export
  */
 export function flatten<T>(array: Array<T>): Array<T> {
-
   // 建立栈辅助
   // 初始化时把array传入
   let stack = [...array];
@@ -386,7 +315,6 @@ export function flatten<T>(array: Array<T>): Array<T> {
 
   // 遍历
   while (stack.length > 0) {
-
     // 从栈顶(队尾)弹出元素
     const current = stack.pop();
 
@@ -435,7 +363,7 @@ export function debounce(callback, delay, immediate: boolean) {
         callback.apply(context, args);
       }, delay);
     }
-  }
+  };
 }
 
 interface ThrottleOptions {
@@ -451,7 +379,7 @@ interface ThrottleOptions {
   trailling: boolean;
 }
 interface Throttle {
-  (callback: Function, delay: number, options?: ThrottleOptions): any
+  (callback: Function, delay: number, options?: ThrottleOptions): any;
 }
 
 /**
@@ -461,7 +389,11 @@ interface Throttle {
  * @param {*} callback
  * @param {*} delay
  */
-export function throttle(callback, delay, options = { leading: true, trailling: true }): Throttle {
+export function throttle(
+  callback,
+  delay,
+  options = { leading: true, trailling: true }
+): Throttle {
   // 时间戳判断
   // 设定一个时间戳，如果当前时间戳 - 之前时间戳，如果 > 传入的周期则 执行函数，否则不执行
   // let prevTimer = 0;
@@ -506,8 +438,8 @@ export function throttle(callback, delay, options = { leading: true, trailling: 
   const later = function () {
     prevTime = +new Date();
     timer = null;
-    callback.apply(context, args)
-  }
+    callback.apply(context, args);
+  };
 
   const throettled = function () {
     context = this;
@@ -517,7 +449,7 @@ export function throttle(callback, delay, options = { leading: true, trailling: 
 
     if (!prevTime && leading === false) {
       // 如果 prevTime 是空，则是第一次，且 leading = false 禁用第一次触发
-      // prevTime = now 
+      // prevTime = now
       prevTime = now;
     }
 
@@ -536,7 +468,7 @@ export function throttle(callback, delay, options = { leading: true, trailling: 
     } else if (!timer && trailling !== false) {
       timer = setTimeout(later, delay);
     }
-  }
+  };
 
   return throettled;
 }
@@ -556,9 +488,9 @@ export function initImgLazyLoad() {
    * 拿到全部图片
    */
   let imageList: Array<HTMLImageElement> = [];
-  document.querySelectorAll('img').forEach(img => {
+  document.querySelectorAll("img").forEach((img) => {
     imageList.push(img);
-  });;
+  });
 
   const length = imageList.length;
 
@@ -574,25 +506,26 @@ export function initImgLazyLoad() {
         let rect = img.getBoundingClientRect();
 
         if (rect.top < window.innerHeight) {
-
           img.src = img.dataset.src;
           alreadyLoadList.push(i);
           count++;
 
           // 如果全部图片加载完毕 移除监听事件
           if (count === length) {
-            document.removeEventListener('scroll', imgLazyLoad);
+            document.removeEventListener("scroll", imgLazyLoad);
           }
         }
-      })
+      });
 
       // 剔除掉已经加载的图片
-      imageList = imageList.filter((img, index) => !alreadyLoadList.includes(index));
-    }
+      imageList = imageList.filter(
+        (img, index) => !alreadyLoadList.includes(index)
+      );
+    };
   })();
 
   // 这里最好加上防抖
-  document.addEventListener('scroll', imgLazyLoad);
+  document.addEventListener("scroll", imgLazyLoad);
 }
 
 /**
@@ -610,7 +543,7 @@ export function jsonP(url, params = {}, callbackName) {
   }
 
   function generateUrl() {
-    let dataStr = '';
+    let dataStr = "";
 
     // 拼接请求参数
     for (let key in params) {
@@ -625,14 +558,14 @@ export function jsonP(url, params = {}, callbackName) {
   }
 
   return new Promise((resolve) => {
-    const scriptElement = document.createElement('script');
+    const scriptElement = document.createElement("script");
     scriptElement.src = generateUrl();
     document.body.appendChild(scriptElement);
 
-    (window as any)[callbackName] = data => {
+    (window as any)[callbackName] = (data) => {
       resolve(data);
       document.removeChild(scriptElement);
-    }
+    };
   });
 }
 
@@ -642,7 +575,6 @@ export function jsonP(url, params = {}, callbackName) {
  * @param add
  */
 export const add = function safeNumberAdd(number1: number, number2: number) {
-
   /**
    * 数字的精度 如传入 0.1 0.01
    * 则 number1Digits = 1;
@@ -650,19 +582,19 @@ export const add = function safeNumberAdd(number1: number, number2: number) {
    * @param number1Digits
    * @param number2Digits
    */
-  const number1Digits = (number1.toString().split('.')[1] || '').length;
-  const number2Digits = (number2.toString().split('.')[1] || '').length;
+  const number1Digits = (number1.toString().split(".")[1] || "").length;
+  const number2Digits = (number2.toString().split(".")[1] || "").length;
 
   /**
    * 根据较大的精度生成基础数
    * number1Digits = 1;
    * number2Digits = 2;
    * baseNumber = Math.pow(10, 2) = 100;
-   * 
+   *
    * return (number1 * 100 + number2 * 100) / 100;
    * @param baseNumber
    */
   const baseNumber = Math.pow(10, Math.max(number1Digits, number2Digits));
 
   return (number1 * baseNumber + number2 * baseNumber) / baseNumber;
-}
+};
