@@ -1,14 +1,16 @@
 {
   "name": "smar-util",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "gaohan javascript util",
-  "main": "src/index.ts",
-  "module": "src/index.ts",
+  "main": "dist/common/index.js",
+  "module": "dist/module/index.js",
   "author": "Harper Gao",
   "license": "MIT",
   "scripts": {
     "tsc": "tsc -w",
     "test": "jest",
+    "build:common": "tsc -p tsconfig.json",
+    "build:module": "tsc -p tsconfig.module.json",
     "build": "rollup -c config/rollup.config.js",
     "watch": "rollup -c config/rollup.config.js --watch",
     "pub": "npm publish --registry https://registry.npmjs.org"
