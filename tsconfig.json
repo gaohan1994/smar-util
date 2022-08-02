@@ -2,7 +2,7 @@
   // "files": ["src/index.ts"],
   "compilerOptions": {
     "lib": ["es2017", "DOM"],
-    "target": "ES5",
+    "target": "ES2017",
     "allowJs": false,
     "module": "ES2015",
     "removeComments": false,
