@@ -18,7 +18,7 @@
     // "rootDir": ".",
     "resolveJsonModule": true,
     // "typeRoots": ["node_modules/@types", "global.d.ts"],
-    "declaration": false
+    "declaration": true
   },
   "compileOnSave": true,
   "include": ["src/**/*"]
