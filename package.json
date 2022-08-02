@@ -1,6 +1,6 @@
 {
   "name": "smar-util",
-  "version": "1.1.8",
+  "version": "1.2.0",
   "description": "gaohan javascript util",
   "main": "dist/index.min.js",
   "module": "src/index.module.ts",
