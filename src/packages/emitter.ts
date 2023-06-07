@@ -28,6 +28,17 @@ class EventEmitter {
     return () => this.removeListener(event, listener);
   }
 
+  once(event: string, listener: EventCBType): void {
+    if (!Array.isArray(this.events[event])) {
+      this.events[event] = [];
+    }
+    const onceListener = () => {
+      this.removeListener(event, listener);
+      listener();
+    };
+    this.events[event].push(onceListener);
+  }
+
   removeListener(event: string, cb: EventCBType): void {
     this.events[event] = cb
       ? this.events[event].filter((listener) => listener !== cb)
